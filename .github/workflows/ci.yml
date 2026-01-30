@@ -17,9 +17,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 10.28.2
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: "pnpm"
+          cache-dependency-path: ./pnpm-lock.yaml
 
-      - run: pnpm ci
+      - run: pnpm install --frozen-lockfil
+
       - run: pnpm run build
