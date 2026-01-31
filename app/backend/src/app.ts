@@ -5,8 +5,8 @@ import YAML from "yaml";
 import fs from "fs";
 import path from "path";
 
-//* precisei usar isso por que o dirname é antigo "commonjs"
-// e como uso esmodules, preciso importar o "dirname" para ler certo /
+//* precisei usar isso por que o dirname é antigo "commonjs" e como uso esmodules,
+//  preciso importar o "dirname" para ler certo e evitar falha no build /
 const __dirname = import.meta.dirname;
 
 const app: Application = express();
