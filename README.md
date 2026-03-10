@@ -26,7 +26,7 @@ O **PagFlow** resolve o problema de integração de pagamentos simulando um ecos
 | :--- | :--- |
 | **Backend** | Node.js, Express, TypeScript, zod |
 | **Frontend** | Next.js, TypeScript, Tailwind |
-| **Banco de Dados** | PostgreSQL | Supabase | Knex |
+| **Banco de Dados** | PostgreSQL, Supabase, Knex.js |
 | **Autenticação** | JWT |
 | **Testes** | Jest, Supertest |
 | **DevOps** | Docker, GitHub Actions |
