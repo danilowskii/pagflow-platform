@@ -20,7 +20,7 @@ O **PagFlow** resolve o problema de integração de pagamentos simulando um ecos
 
 ---
 
-## 🛠️ Stack Tecnológica
+## 🛠️ Stack
 
 | Camada | Tecnologia |
 | :--- | :--- |
