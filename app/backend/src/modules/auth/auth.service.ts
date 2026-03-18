@@ -3,11 +3,14 @@ import { CustomerRepository } from "../customers/customer.repository.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import type { User, SafeUser } from "../customers/customer.types.js";
-import dotenv from "dotenv";
-dotenv.config();
 
-interface RegisterDTO {
+interface RegisterServiceDTO {
     name: string;
+    email: string;
+    password: string;
+}
+
+interface LoginServiceDTO {
     email: string;
     password: string;
 }
@@ -27,12 +30,13 @@ export class AuthService {
 
     constructor() {
         this.customerRepository = new CustomerRepository();
+        
     }
 
-    async register(dto: RegisterDTO): Promise<RegisterResponse> {
+    async register(dto: RegisterServiceDTO): Promise<RegisterResponse> {
         const existingUser = await this.customerRepository.findUserByEmail(dto.email);
         if (existingUser) {
-            throw new Error("User with this email already exists");
+            throw new Error("Já existe um usuário com esse e-mail.");
         }
 
         const passwordHash = await bcrypt.hash(dto.password, 12);
@@ -65,5 +69,27 @@ export class AuthService {
 
     return {accessToken, refreshToken};
 
+    }
+
+    async login(dto: LoginServiceDTO) {
+        if (!dto.email || !dto.password) {
+            throw new Error("Credenciais inválidas. ")
+        }
+
+        const existingUser = await this.customerRepository.findUserByEmail(dto.email)
+        if (!existingUser) {
+            throw new Error("Usuário não encontrado.")
+        }
+
+        const passwordVerification = await bcrypt.compare(dto.password, existingUser.password_hash)
+
+        if (!passwordVerification) {
+            throw new Error("Senha incorreta.")
+        }
+        
+        const tokens = this.generateTokens(existingUser.id)
+        const {password_hash: _, ...safeUser} = existingUser;
+
+        return { user: safeUser, tokens };
     }
 }

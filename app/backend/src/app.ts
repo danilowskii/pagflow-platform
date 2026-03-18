@@ -1,4 +1,5 @@
 import express, { Application } from "express";
+import { authRouter } from "./modules/auth/auth.routes.js"
 import cors from "cors";
 import swaggerUi from "swagger-ui-express";
 import YAML from "yaml";
@@ -18,5 +19,6 @@ const openApiFile = fs.readFileSync(openApiPath, "utf8");
 const openApiSpec = YAML.parse(openApiFile);
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(openApiSpec));
+app.use("/api", authRouter)
 
 export default app;
