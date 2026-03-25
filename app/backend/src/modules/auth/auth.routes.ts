@@ -1,13 +1,23 @@
-import { Router } from "express";
+import { NextFunction, Router } from "express";
 import { type Request, type Response } from "express";
-import { AuthController } from "./auth.controller.js"
+import { AuthController } from "./auth.controller.js";
+import { validate } from "../../middlewares/validate.js";
+import { loginSchema, registerSchema } from "./auth.schema.js";
 
 const authRouter: Router = Router();
-const authController = new AuthController()
+const authController = new AuthController();
 
-authRouter.post("/auth/register", (req: Request, res: Response) => authController.register(req, res))
-authRouter.post("/auth/login", (req: Request, res: Response) => authController.login(req , res))
+authRouter.post(
+  "/auth/register",
+  validate(registerSchema),
+  (req: Request, res: Response, next: NextFunction) =>
+    authController.register(req, res, next),
+);
+authRouter.post(
+  "/auth/login",
+  validate(loginSchema),
+  (req: Request, res: Response, next: NextFunction) =>
+    authController.login(req, res, next),
+);
 
-export {authRouter}
-
-
+export { authRouter };
