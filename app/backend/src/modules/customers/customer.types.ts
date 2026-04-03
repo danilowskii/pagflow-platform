@@ -1,8 +1,8 @@
-export interface User {
-    id: string;
-    name: string;
-    email: string;
-    password_hash: string;
+export interface Customer {
+  id: string;
+  name: string;
+  email: string;
+  password_hash: string;
 }
 
-export type SafeUser = Omit<User, "password_hash">;
+export type SafeCustomer = Omit<Customer, "password_hash">;

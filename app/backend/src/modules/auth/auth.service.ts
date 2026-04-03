@@ -2,7 +2,7 @@ import { v7 as uuidv7 } from "uuid";
 import { CustomerRepository } from "../customers/customer.repository.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import type { User, SafeUser } from "../customers/customer.types.js";
+import type { Customer, SafeCustomer } from "../customers/customer.types.js";
 import { AppError } from "../../errors/AppError.js";
 import { type RegisterDTO, type LoginDTO } from "./auth.schema.js";
 
@@ -12,7 +12,7 @@ interface AuthTokens {
 }
 
 interface RegisterResponse {
-  user: SafeUser;
+  user: SafeCustomer;
   tokens: AuthTokens;
 }
 
@@ -34,7 +34,7 @@ export class AuthService {
     const passwordHash = await bcrypt.hash(dto.password, 12);
     const userId = uuidv7();
 
-    const newUser: User = await this.customerRepository.createUser({
+    const newUser: Customer = await this.customerRepository.createUser({
       id: userId,
       name: dto.name,
       email: dto.email,
@@ -42,7 +42,7 @@ export class AuthService {
     });
 
     const tokens = this.generateTokens(newUser.id);
-    const { password_hash, ...safeUser } = newUser as SafeUser & {
+    const { password_hash, ...safeUser } = newUser as SafeCustomer & {
       password_hash: string;
     };
     return { user: safeUser, tokens };
