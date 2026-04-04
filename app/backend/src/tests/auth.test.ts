@@ -77,8 +77,3 @@ describe("POST /auth/login", () => {
     expect(response.status).toBe(401);
   });
 });
-
-afterAll(async () => {
-  await db("customers").where("email", "like", "test_%").delete();
-  await db.destroy();
-});

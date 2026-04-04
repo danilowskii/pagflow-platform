@@ -1,5 +1,4 @@
-import { NextFunction, Router } from "express";
-import { type Request, type Response } from "express";
+import { NextFunction, Router, type Request, type Response } from "express";
 import { AuthController } from "./auth.controller.js";
 import { validate } from "../../middlewares/validate.js";
 import { loginSchema, registerSchema } from "./auth.schema.js";

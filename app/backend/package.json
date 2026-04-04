@@ -8,6 +8,8 @@
   "scripts": {
     "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
     "migrate:latest": "pnpm exec cross-env NODE_ENV=test tsx knexfile.ts migrate:latest",
+    "seed:dev": "pnpm exec tsx ./node_modules/knex/bin/cli.js --knexfile knexfile.ts seed:run",
+    "seed:test": "pnpm exec cross-env NODE_ENV=test tsx ./node_modules/knex/bin/cli.js --knexfile knexfile.ts seed:run",
     "dev": "tsx --watch src/server.ts",
     "build": "tsup",
     "start": "node dist/server.js"

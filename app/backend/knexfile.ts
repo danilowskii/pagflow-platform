@@ -11,4 +11,7 @@ export default {
     tableName: "migrations",
     directory: "./migrations",
   },
+  seeds: {
+    directory: "./seeds",
+  },
 };

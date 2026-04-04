@@ -6,6 +6,7 @@ import YAML from "yaml";
 import fs from "fs";
 import path from "path";
 import { errorHandler } from "./middlewares/errorHandler.js";
+import { productRouter } from "./modules/produtcs/product.routes.js";
 
 //* precisei usar isso por que o dirname é antigo "commonjs" e como uso esmodules,
 //  preciso importar o "dirname" para ler certo e evitar falha no build /
@@ -23,6 +24,7 @@ if (process.env.NODE_ENV !== "test") {
 }
 
 app.use("/api", authRouter);
+app.use("/api", productRouter);
 
 app.use(errorHandler);
 
