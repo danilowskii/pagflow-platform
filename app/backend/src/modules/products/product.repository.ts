@@ -10,8 +10,10 @@ export class ProductRepository {
   }
 
   async findProduct(id: string) {
-    const product = await db("products")
-      .where({ id: id, active: true })
+    const product = await db
+      .select("id", "name", "description", "price_cents", "currency")
+      .from("products")
+      .where({ id: id })
       .first();
     return product;
   }

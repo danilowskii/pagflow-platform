@@ -2,19 +2,22 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "NodeNext",
-    "lib": ["ESNext"],
     "moduleResolution": "NodeNext",
-    "baseUrl": ".",
+    "lib": ["ESNext"],
+
+    "rootDir": "src",
+    "outDir": "dist",
+
+    "types": ["jest", "node"],
+    "strict": true,
+    "noImplicitAny": true,
+    "skipLibCheck": true,
 
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true,
+    "sourceMap": true,
 
-    "strict": true,
-    "noImplicitAny": true,
-
-    "outDir": "dist",
-    "sourceMap": true
+    "ignoreDeprecations": "5.0"
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]

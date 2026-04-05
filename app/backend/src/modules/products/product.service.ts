@@ -1,6 +1,5 @@
 import { AppError } from "../../errors/AppError.js";
 import { ProductRepository } from "./product.repository.js";
-import { Product, ProductDB } from "./product.types.js";
 
 export class ProductService {
   private productRepository: ProductRepository;
@@ -11,6 +10,7 @@ export class ProductService {
 
   async selectProducts() {
     const result = await this.productRepository.selectProduct();
+
     return result;
   }
 
