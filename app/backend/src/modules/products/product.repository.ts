@@ -1,7 +1,7 @@
 import db from "../../db/index.js";
 
 export class ProductRepository {
-  async selectProduct() {
+  async selectProducts() {
     const products = await db
       .select("id", "name", "description", "price_cents", "currency")
       .from("products")
@@ -16,5 +16,13 @@ export class ProductRepository {
       .where({ id: id })
       .first();
     return product;
+  }
+
+  async getPrice(procut_id: string) {
+    const result = await db
+      .select("price_cents")
+      .where({ id: procut_id })
+      .first();
+    return result;
   }
 }
