@@ -1,17 +1,17 @@
 import db from "../../db/index.js";
-import { Orders } from "./order.types.js";
+import { OrderDBDTO } from "./order.types.js";
 
 export class OrderRepository {
-  async postNewOrder(payload: Orders, price: number) {
+  async postNewOrder(payload: OrderDBDTO) {
     const [order] = await db("orders")
       .insert({
         id: payload.id,
         customer_id: payload.customer_id,
         product_id: payload.product_id,
-        amount_cents: price,
+        amount_cents: payload.amount_cents,
         status: payload.status,
       })
-      .returning("*");
+      .returning(["customer_id", "product_id", "amount_cents", "status"]);
 
     return order;
   }

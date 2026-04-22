@@ -9,7 +9,7 @@ export class ProductService {
   }
 
   async selectProducts() {
-    const result = await this.productRepository.selectProduct();
+    const result = await this.productRepository.selectProducts();
 
     return result;
   }

@@ -21,6 +21,7 @@ export class ProductRepository {
   async getPrice(procut_id: string) {
     const result = await db
       .select("price_cents")
+      .from("products")
       .where({ id: procut_id })
       .first();
     return result;

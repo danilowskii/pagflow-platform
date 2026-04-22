@@ -1,9 +1,16 @@
-type OrderStatus = "PENDING" | "PAID" | "FAILED";
+import z from "zod";
 
-export interface Orders {
-  id: string;
-  customer_id: string;
-  product_id: string;
-  amount_cents: number;
-  status: OrderStatus;
-}
+const OrderDBSchema = z.object({
+  id: z.uuid(),
+  customer_id: z.uuid(),
+  product_id: z.uuid(),
+  amount_cents: z.int(),
+  status: z.enum(["PENDING", "PAID", "FAILED"]),
+});
+
+export const OrderClientSchema = z.object({
+  product_id: z.uuid(),
+});
+
+export type OrderDBDTO = z.infer<typeof OrderDBSchema>;
+export type OrderClientDTO = z.infer<typeof OrderClientSchema>;

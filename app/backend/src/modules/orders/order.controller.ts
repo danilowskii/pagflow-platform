@@ -10,12 +10,14 @@ export class OrderController {
   }
 
   async postNewOrder(req: Request, res: Response, next: NextFunction) {
-    const payload = req.body;
-    if (!payload) {
-      return next(new AppError("Payload não recebido.", 404));
-    }
+    const product_id = req.body.product_id;
+    const customer_id = req.user!.id;
+
     try {
-      const result = await this.orderService.postNewOrder(payload);
+      const result = await this.orderService.postNewOrder({
+        product_id,
+        customer_id,
+      });
       res.status(201).json({ "Ordem criada com sucesso.": result });
     } catch (error) {
       next(error);

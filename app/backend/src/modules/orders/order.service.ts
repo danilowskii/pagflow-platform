@@ -1,8 +1,7 @@
 import { AppError } from "../../errors/AppError.js";
 import { ProductRepository } from "../products/product.repository.js";
 import { OrderRepository } from "./order.repository.js";
-import { Orders } from "./order.types.js";
-
+import { v7 as uuidv7 } from "uuid";
 export class OrderService {
   private orderRepository: OrderRepository;
   private productRepository: ProductRepository;
@@ -12,26 +11,30 @@ export class OrderService {
     this.productRepository = new ProductRepository();
   }
 
-  async postNewOrder(dto: Orders) {
-    if (!dto) throw new AppError("Dados da ordem não recebidos", 400);
-    const getPrice = await this.productRepository.getPrice(dto.product_id);
-    if (!getPrice) throw new AppError("Erro ao buscar valor do produto.", 400);
+  async postNewOrder(dto: { product_id: string; customer_id: string }) {
+    const id = uuidv7();
 
-    const result = await this.orderRepository.postNewOrder(dto, getPrice);
+    const amount_cents = await this.productRepository.getPrice(dto.product_id);
+    if (!amount_cents)
+      throw new AppError("Erro ao buscar valor do produto.", 400);
+    const payload = {
+      id,
+      amount_cents: amount_cents.price_cents,
+      status: "PENDING" as const,
+      ...dto,
+    };
+    const result = await this.orderRepository.postNewOrder(payload);
     return result;
   }
 
   async findOrdersByCustomer(customer_id: string) {
-    if (!customer_id) throw new AppError("ID do usuário não recebido.", 400);
-
     const result = await this.orderRepository.findOrdersByCustomer(customer_id);
     return result;
   }
 
   async findOrderById(order_id: string) {
-    if (!order_id) throw new AppError("ID da ordem não recebido.", 400);
-
     const result = await this.orderRepository.findOrderById(order_id);
+    if (!result) throw new AppError("Ordem não encontrada.", 404);
     return result;
   }
 }

@@ -1,15 +1,15 @@
 import express, { Application } from "express";
-import { authRouter } from "./modules/auth/auth.routes.js";
+
 import cors from "cors";
 import swaggerUi from "swagger-ui-express";
 import YAML from "yaml";
 import fs from "fs";
 import path from "path";
 import { errorHandler } from "./middlewares/errorHandler.js";
+//rotas
+import { authRouter } from "./modules/auth/auth.routes.js";
 import { productRouter } from "./modules/products/product.routes.js";
-
-//* precisei usar isso por que o dirname é antigo "commonjs" e como uso esmodules,
-//  preciso importar o "dirname" para ler certo e evitar falha no build /
+import { orderRouter } from "./modules/orders/order.routes.js";
 
 const app: Application = express();
 app.use(express.json());
@@ -25,6 +25,7 @@ if (process.env.NODE_ENV !== "test") {
 
 app.use("/api", authRouter);
 app.use("/api", productRouter);
+app.use("/api", orderRouter);
 
 app.use(errorHandler);
 
