@@ -2,7 +2,6 @@ import { AppError } from "../../errors/AppError.js";
 import { ProductRepository } from "../products/product.repository.js";
 import { OrderRepository } from "./order.repository.js";
 import { Orders } from "./order.types.js";
-import jwt from "jsonwebtoken";
 
 export class OrderService {
   private orderRepository: OrderRepository;
